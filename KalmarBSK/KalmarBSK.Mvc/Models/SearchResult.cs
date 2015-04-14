@@ -8,7 +8,7 @@ namespace KalmarBSK.Mvc.Models
 {
     public class SearchResult
     {
-        public List<Member> Members { get; set; }
-        public List<Meeting> Meetings { get; set; }
+        public List<Personer> Members { get; set; }
+        public List<GameLocation> Meetings { get; set; }
     }
 }

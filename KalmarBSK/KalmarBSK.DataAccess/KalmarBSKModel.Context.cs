@@ -13,10 +13,10 @@ namespace KalmarBSK.DataAccess
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KalmarBSKEntities : DbContext
+    public partial class KlubbdatabasEntities : DbContext
     {
-        public KalmarBSKEntities()
-            : base("name=KalmarBSKEntities")
+        public KlubbdatabasEntities()
+            : base("name=KlubbdatabasEntities")
         {
         }
     
@@ -25,7 +25,8 @@ namespace KalmarBSK.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Meeting> Meetings { get; set; }
-        public virtual DbSet<Member> Members { get; set; }
+        public virtual DbSet<GameLocation> GameLocations { get; set; }
+        public virtual DbSet<MeetingParticipant> MeetingParticipants { get; set; }
+        public virtual DbSet<Personer> Personers { get; set; }
     }
 }

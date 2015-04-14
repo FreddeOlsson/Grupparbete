@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KlubbdatabasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GameLocation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adress" Type="varchar" MaxLength="255" />
+          <Property Name="Datum" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MeetingParticipant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GameLocationId" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Personer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Namn" Type="varchar" MaxLength="255" />
+          <Property Name="Adress" Type="varchar" MaxLength="255" />
+          <Property Name="Telefon" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_MeetingParticipants_GameLocation_GameLocationId">
+          <End Role="GameLocation" Type="Self.GameLocation" Multiplicity="1" />
+          <End Role="MeetingParticipant" Type="Self.MeetingParticipant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameLocation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MeetingParticipant">
+              <PropertyRef Name="GameLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingParticipants_Personer_PersonId">
+          <End Role="Personer" Type="Self.Personer" Multiplicity="1" />
+          <End Role="MeetingParticipant" Type="Self.MeetingParticipant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MeetingParticipant">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KlubbdatabasModelStoreContainer">
+          <EntitySet Name="GameLocation" EntityType="Self.GameLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeetingParticipant" EntityType="Self.MeetingParticipant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personer" EntityType="Self.Personer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MeetingParticipants_GameLocation_GameLocationId" Association="Self.FK_MeetingParticipants_GameLocation_GameLocationId">
+            <End Role="GameLocation" EntitySet="GameLocation" />
+            <End Role="MeetingParticipant" EntitySet="MeetingParticipant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingParticipants_Personer_PersonId" Association="Self.FK_MeetingParticipants_Personer_PersonId">
+            <End Role="Personer" EntitySet="Personer" />
+            <End Role="MeetingParticipant" EntitySet="MeetingParticipant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KlubbdatabasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GameLocation">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Datum" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MeetingParticipants" Relationship="Self.FK_MeetingParticipants_GameLocation_GameLocationId" FromRole="GameLocation" ToRole="MeetingParticipant" />
+        </EntityType>
+        <EntityType Name="MeetingParticipant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GameLocationId" Type="Int32" Nullable="false" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GameLocation" Relationship="Self.FK_MeetingParticipants_GameLocation_GameLocationId" FromRole="MeetingParticipant" ToRole="GameLocation" />
+          <NavigationProperty Name="Personer" Relationship="Self.FK_MeetingParticipants_Personer_PersonId" FromRole="MeetingParticipant" ToRole="Personer" />
+        </EntityType>
+        <EntityType Name="Personer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Namn" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Adress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Telefon" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MeetingParticipants" Relationship="Self.FK_MeetingParticipants_Personer_PersonId" FromRole="Personer" ToRole="MeetingParticipant" />
+        </EntityType>
+        <Association Name="FK_MeetingParticipants_GameLocation_GameLocationId">
+          <End Role="GameLocation" Type="Self.GameLocation" Multiplicity="1" />
+          <End Role="MeetingParticipant" Type="Self.MeetingParticipant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameLocation">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MeetingParticipant">
+              <PropertyRef Name="GameLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingParticipants_Personer_PersonId">
+          <End Role="Personer" Type="Self.Personer" Multiplicity="1" />
+          <End Role="MeetingParticipant" Type="Self.MeetingParticipant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MeetingParticipant">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KlubbdatabasEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GameLocations" EntityType="Self.GameLocation" />
+          <EntitySet Name="MeetingParticipants" EntityType="Self.MeetingParticipant" />
+          <EntitySet Name="Personers" EntityType="Self.Personer" />
+          <AssociationSet Name="FK_MeetingParticipants_GameLocation_GameLocationId" Association="Self.FK_MeetingParticipants_GameLocation_GameLocationId">
+            <End Role="GameLocation" EntitySet="GameLocations" />
+            <End Role="MeetingParticipant" EntitySet="MeetingParticipants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingParticipants_Personer_PersonId" Association="Self.FK_MeetingParticipants_Personer_PersonId">
+            <End Role="Personer" EntitySet="Personers" />
+            <End Role="MeetingParticipant" EntitySet="MeetingParticipants" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KlubbdatabasModelStoreContainer" CdmEntityContainer="KlubbdatabasEntities">
+          <EntitySetMapping Name="GameLocations">
+            <EntityTypeMapping TypeName="KlubbdatabasModel.GameLocation">
+              <MappingFragment StoreEntitySet="GameLocation">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeetingParticipants">
+            <EntityTypeMapping TypeName="KlubbdatabasModel.MeetingParticipant">
+              <MappingFragment StoreEntitySet="MeetingParticipant">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GameLocationId" ColumnName="GameLocationId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personers">
+            <EntityTypeMapping TypeName="KlubbdatabasModel.Personer">
+              <MappingFragment StoreEntitySet="Personer">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Namn" ColumnName="Namn" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

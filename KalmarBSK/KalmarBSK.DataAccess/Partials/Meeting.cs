@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace KalmarBSK.DataAccess
 {
-    public partial class Meeting
+    public partial class GameLocation
     {
-        public bool IsUpcoming { get { return this.Date > DateTime.Now; } }
+        public bool IsUpcoming { get { return this.Datum > DateTime.Now; } }
     }
 }

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{541261CA-2117-4A10-8F6E-4FFA7F2A5722}</ProjectGuid>
+    <ProjectGuid>{2FC21692-8304-47A3-9B16-AB3C0314ED0F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KalmarBSK.DataAccess</RootNamespace>
@@ -48,57 +48,65 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddressModel.Context.cs">
+    <Compile Include="GameLocation.cs">
+      <DependentUpon>KalmarBSKModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KalmarBSKModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AddressModel.Context.tt</DependentUpon>
+      <DependentUpon>KalmarBSKModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="AddressModel.cs">
+    <Compile Include="KalmarBSKModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AddressModel.tt</DependentUpon>
+      <DependentUpon>KalmarBSKModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="AddressModel.Designer.cs">
+    <Compile Include="KalmarBSKModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AddressModel.edmx</DependentUpon>
+      <DependentUpon>KalmarBSKModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Meeting.cs">
-      <DependentUpon>AddressModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Member.cs">
-      <DependentUpon>AddressModel.tt</DependentUpon>
+    <Compile Include="MeetingParticipant.cs">
+      <DependentUpon>KalmarBSKModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Partials\Meeting.cs" />
+    <Compile Include="Personer.cs">
+      <DependentUpon>KalmarBSKModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="AddressModel.edmx">
+    <EntityDeploy Include="KalmarBSKModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AddressModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>KalmarBSKModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AddressModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AddressModel.edmx</DependentUpon>
-      <LastGenOutput>AddressModel.Context.cs</LastGenOutput>
-    </None>
-    <None Include="AddressModel.edmx.diagram">
-      <DependentUpon>AddressModel.edmx</DependentUpon>
-    </None>
-    <None Include="AddressModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AddressModel.edmx</DependentUpon>
-      <LastGenOutput>AddressModel.cs</LastGenOutput>
-    </None>
     <None Include="App.Config" />
+    <None Include="KalmarBSKModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KalmarBSKModel.edmx</DependentUpon>
+      <LastGenOutput>KalmarBSKModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="KalmarBSKModel.edmx.diagram">
+      <DependentUpon>KalmarBSKModel.edmx</DependentUpon>
+    </None>
+    <None Include="KalmarBSKModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KalmarBSKModel.edmx</DependentUpon>
+      <LastGenOutput>KalmarBSKModel.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\KalmarBSK.Mvc\KalmarBSK.Mvc.csproj">
+      <Project>{f3d8621c-504d-477c-81ff-45ff5e1234aa}</Project>
+      <Name>KalmarBSK.Mvc</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

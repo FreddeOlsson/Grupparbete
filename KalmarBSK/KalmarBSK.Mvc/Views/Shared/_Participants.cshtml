@@ -1,4 +1,4 @@
-﻿@model IEnumerable<KalmarBSK.DataAccess.Member>
+﻿@model IEnumerable<KalmarBSK.DataAccess.Personer>
 
 
 
@@ -6,7 +6,7 @@
     @foreach (var item in Model)
     {
         <li>
-            @(item.FirstName + " " + item.LastName)
+            @(item.Namn)
         </li>
     }
 </ul>

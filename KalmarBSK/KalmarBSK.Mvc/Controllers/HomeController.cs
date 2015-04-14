@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace KalmarBSK.Mvc.Controllers
 {
@@ -13,10 +16,10 @@ namespace KalmarBSK.Mvc.Controllers
         public ActionResult Index()
         {
             SearchResult sr = new SearchResult();
-            using (var ctx = new KalmarBSKEntities())
+            using (var ctx = new KlubbdatabasEntities())
             {
-                sr.Meetings = ctx.Meetings.Take(20).ToList();
-                sr.Members = ctx.Members.Take(20).ToList();
+                sr.Meetings = ctx.GameLocations.Include(x => x.MeetingParticipants).Take(20).ToList();
+                sr.Members = ctx.Personers.Take(20).ToList();
             }
 
             return View(sr);
@@ -24,10 +27,10 @@ namespace KalmarBSK.Mvc.Controllers
 
         public ActionResult Meetings()
         {
-            List<Meeting> list;
-            using (var ctx = new KalmarBSKEntities())
+            List<GameLocation> list;
+            using (var ctx = new KlubbdatabasEntities())
             {
-                list = ctx.Meetings.Take(20).ToList();
+                list = ctx.GameLocations.Include(x => x.MeetingParticipants).Take(20).ToList();
             }
             return View(list);
         }
@@ -35,27 +38,31 @@ namespace KalmarBSK.Mvc.Controllers
 
         public ActionResult Members()
         {
-            List<Member> list;
-            using (var ctx = new KalmarBSKEntities())
+            List<Personer> list;
+            using (var ctx = new KlubbdatabasEntities())
             {
-                list = ctx.Members.Take(20).ToList();
+                list = ctx.Personers.Take(20).ToList();
             }
             return View(list);
         }
 
 
-        public ActionResult SearchFilter(string search, bool members = false, bool meetings = false)
+        public ActionResult SearchFilter(string search, bool members = false, bool meetings = false, bool oldMeetings = false)
         {
             SearchResult sr = new SearchResult();
-            using (var ctx = new KalmarBSKEntities())
+            using (var ctx = new KlubbdatabasEntities())
             {
                 if (meetings)
                 {
-                    sr.Meetings = ctx.Meetings.ToList(); 
+                    sr.Meetings = ctx.GameLocations.Include(x => x.MeetingParticipants).ToList();
+                    if (!oldMeetings)
+                    {
+                        sr.Meetings = sr.Meetings.Where(x => x.IsUpcoming).ToList();
+                    }
                 }
                 if (members)
                 {
-                    sr.Members = ctx.Members.ToList(); 
+                    sr.Members = ctx.Personers.ToList(); 
                 }
             }
             if (!string.IsNullOrEmpty(search))
@@ -63,13 +70,13 @@ namespace KalmarBSK.Mvc.Controllers
                 if (meetings)
                 {
 
-                    sr.Meetings = sr.Meetings.Where(x => x.Location.Contains(search)).ToList();
+                    sr.Meetings = sr.Meetings.Where(x => x.Adress.Contains(search)).ToList();
                     
                 }
                 if (members)
                 {
 
-                    sr.Members = sr.Members.Where(x => x.FirstName.Contains(search)).ToList();
+                    sr.Members = sr.Members.Where(x => x.Namn.Contains(search)).ToList();
                     
                 }
             }
@@ -80,15 +87,31 @@ namespace KalmarBSK.Mvc.Controllers
             return PartialView("~/Views/Shared/_SearchFilter.cshtml", sr);
         }
 
-        public ActionResult GetParticipants(int number)
+        public ActionResult GetParticipants(string JSONModel)
         {
-            List<Member> list;
-            using (var ctx = new KalmarBSKEntities())
-            {
-                list = ctx.Members.Take(number).ToList();
-            }
-            return PartialView("~/Views/Shared/_Participants.cshtml", list);
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ICollection<MeetingParticipant>));
+            var yourobject = (ICollection<MeetingParticipant>)ser.ReadObject(GenerateStreamFromString(JSONModel));
+
+
+            List<Personer> participants;
+            //using (var ctx = new KlubbdatabasEntities())
+            //{
+            //    participants = ctx.Personers.Join<Personer, MeetingParticipant, int, Personer>(list
+            //        , x => x.ID
+            //        , y => y.PersonId
+            //        , (x, y) => new Personer { Adress = x.Adress, ID = x.ID, Namn = x.Namn, Telefon = x.Telefon }).ToList();
+            //}
+            return PartialView("~/Views/Shared/_Participants.cshtml");
         }
 
+        private Stream GenerateStreamFromString(string s)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
     }
 }

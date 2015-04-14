@@ -12,12 +12,18 @@ namespace KalmarBSK.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class Member
+    public partial class Personer
     {
-        public int MemberID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string City { get; set; }
-        public string Email { get; set; }
+        public Personer()
+        {
+            this.MeetingParticipants = new HashSet<MeetingParticipant>();
+        }
+    
+        public int ID { get; set; }
+        public string Namn { get; set; }
+        public string Adress { get; set; }
+        public string Telefon { get; set; }
+    
+        public virtual ICollection<MeetingParticipant> MeetingParticipants { get; set; }
     }
 }

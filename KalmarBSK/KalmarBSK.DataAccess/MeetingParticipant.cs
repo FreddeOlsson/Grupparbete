@@ -12,11 +12,13 @@ namespace KalmarBSK.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class Meeting
+    public partial class MeetingParticipant
     {
-        public int MeetingID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public string Location { get; set; }
-        public Nullable<int> Participants { get; set; }
+        public int Id { get; set; }
+        public int GameLocationId { get; set; }
+        public int PersonId { get; set; }
+    
+        public virtual GameLocation GameLocation { get; set; }
+        public virtual Personer Personer { get; set; }
     }
 }

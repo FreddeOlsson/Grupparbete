@@ -3,7 +3,7 @@
 
 
 
-
+<div id="participants-modal"></div>
 <div class="row">
     @if (Model.Meetings != null)
     {
@@ -15,9 +15,9 @@
 
                 <table class="table table-hover">
                     <tr>
-                        <th>@Html.DisplayNameFor(x => x.Meetings[0].Date)</th>
-                        <th>@Html.DisplayNameFor(x => x.Meetings[0].Location)</th>
-                        <th>@Html.DisplayNameFor(x => x.Meetings[0].Participants)</th>
+                        <th>@Html.DisplayNameFor(x => x.Meetings[0].Datum)</th>
+                        <th>@Html.DisplayNameFor(x => x.Meetings[0].Adress)</th>
+                        <th>@Html.DisplayNameFor(x => x.Meetings[0].MeetingParticipants)</th>
                     </tr>
                     @foreach (var item in Model.Meetings)
                     {
@@ -25,9 +25,10 @@
                         if (item.IsUpcoming)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(x => item.Date)</td>
-                                <td>@Html.DisplayFor(x => item.Location)</td>
-                                <td>@Html.DisplayFor(x => item.Participants)</td>
+                                <td>@Html.DisplayFor(x => item.Datum)</td>
+                                <td>@Html.DisplayFor(x => item.Adress)</td>
+                                @*<td>@Html.DisplayFor(x => item.MeetingParticipants.Count)</td>*@
+                                <td>@Ajax.ActionLink("" + Html.DisplayFor(x => item.MeetingParticipants.Count), "GetParticipants", new { JSONModel = Json.Encode(item.MeetingParticipants.ToList()), }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "participants-modal", InsertionMode = InsertionMode.Replace })</td>
                             </tr>
                         }
 
@@ -36,35 +37,38 @@
                 </table>
             </div>
 
+            @if (Model.Meetings.Where(x => x.IsUpcoming == false).Count() > 0)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h2>Gamla Möten</h2></div>
+                    <div class="panel-body">
+                    </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading"><h2>Gamla Möten</h2></div>
-                <div class="panel-body">
-                </div>
-
-                <table class="table table-hover">
-                    <tr>
-                        <th>@Html.DisplayNameFor(x => x.Meetings[0].Date)</th>
-                        <th>@Html.DisplayNameFor(x => x.Meetings[0].Location)</th>
-                        <th>@Html.DisplayNameFor(x => x.Meetings[0].Participants)</th>
-                    </tr>
-                    @foreach (var item in Model.Meetings)
-                    {
-                        if (!item.IsUpcoming)
+                    <table class="table table-hover">
+                        <tr>
+                            <th>@Html.DisplayNameFor(x => x.Meetings[0].Datum)</th>
+                            <th>@Html.DisplayNameFor(x => x.Meetings[0].Adress)</th>
+                            <th>@Html.DisplayNameFor(x => x.Meetings[0].MeetingParticipants)</th>
+                        </tr>
+                        @foreach (var item in Model.Meetings)
                         {
-                            <tr>
-                                <td>@Html.DisplayFor(x => item.Date)</td>
-                                <td>@Html.DisplayFor(x => item.Location)</td>
-                                <td>@Html.DisplayFor(x => item.Participants)</td>
-                            </tr>
-                        }
+                            if (!item.IsUpcoming)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(x => item.Datum)</td>
+                                    <td>@Html.DisplayFor(x => item.Adress)</td>
+                                    <td>@Html.DisplayFor(x => item.MeetingParticipants.Count)</td>
+                                </tr>
+                            }
 
-                    }
-                </table>
-            </div>
+                        }
+                    </table>
+                </div>
+            }
+
         </div>
     }
-    
+
 
     @if (Model.Members != null)
     {
@@ -76,19 +80,17 @@
 
                 <table class="table table-hover">
                     <tr>
-                        <th>@Html.DisplayNameFor(x => x.Members[0].FirstName)</th>
-                        <th>@Html.DisplayNameFor(x => x.Members[0].LastName)</th>
-                        <th>@Html.DisplayNameFor(x => x.Members[0].City)</th>
-                        <th>@Html.DisplayNameFor(x => x.Members[0].Email)</th>
+                        <th>@Html.DisplayNameFor(x => x.Members[0].Namn)</th>
+                        <th>@Html.DisplayNameFor(x => x.Members[0].Adress)</th>
+                        <th>@Html.DisplayNameFor(x => x.Members[0].Telefon)</th>
                     </tr>
                     @foreach (var item in Model.Members)
                     {
 
                         <tr>
-                            <td>@Html.DisplayFor(x => item.FirstName)</td>
-                            <td>@Html.DisplayFor(x => item.LastName)</td>
-                            <td>@Html.DisplayFor(x => item.City)</td>
-                            <td>@Html.DisplayFor(x => item.Email)</td>
+                            <td>@Html.DisplayFor(x => item.Namn)</td>
+                            <td>@Html.DisplayFor(x => item.Adress)</td>
+                            <td>@Html.DisplayFor(x => item.Telefon)</td>
                         </tr>
 
 
@@ -97,5 +99,5 @@
             </div>
         </div>
     }
-    
+
 </div>

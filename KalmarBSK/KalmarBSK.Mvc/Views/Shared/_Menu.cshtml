@@ -19,33 +19,49 @@
         <a class="list-group-item" href="@Url.Action("Members")">Medlemmar</a>
         <a class="list-group-item" href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Sök och bläddra</a>
     </div>
-    
+
 </div>
 <div class="collapse" id="collapseExample">
     <div class="well">
 
-        @using (Ajax.BeginForm("SearchFilter", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "content", InsertionMode = InsertionMode.Replace }))
+        @using (Ajax.BeginForm("SearchFilter", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "content", InsertionMode = InsertionMode.Replace, OnSuccess = "hello()" }))
         {
 
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search for..." name="search">
+                <input type="text" class="form-control" placeholder="Search for..." name="search" id="searchbox">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">Go!</button>
                 </span>
             </div>
 
-    <div class="checkbox">
-        <label>
-            <input class="check-box" type="checkbox" name="members" value="true" checked>
-            Inkludera medlemmar
-        </label>
+            <div class="checkbox">
+                <label>
+                    <input class="check-box" type="checkbox" name="members" value="true" data-toggle="collapse" data-target="#member-detail" aria-expanded="false" aria-controls="member-detail">
+                    Inkludera medlemmar
+                </label>
+            </div>
+    <div class="panel panel-default collapse" id="member-detail">
+        <div class="panel-body">
+            ...
+        </div>
     </div>
-    <div class="checkbox">
-        <label>
-            <input class="check-box" type="checkbox" name="meetings" value="true" checked>
-            Inkludera möten
-        </label>
-    </div>
+
+            <div class="checkbox">
+                <label>
+                    <input class="check-box" type="checkbox" name="meetings" value="true" data-toggle="collapse" data-target="#meeting-detail" aria-expanded="false" aria-controls="meeting-detail">
+                    Inkludera möten
+                </label>
+            </div>
+            <div class="panel panel-default collapse" id="meeting-detail">
+                <div class="panel-body">
+                    <div class="checkbox">
+                        <label>
+                            <input class="check-box" type="checkbox" name="oldMeetings" value="true">
+                            Inkludera gamla möten
+                        </label>
+                    </div>
+                </div>
+            </div>
 
         }
 
@@ -53,14 +69,8 @@
     </div>
 </div>
 
-@*<script>
-    $('.check-box').change(function () {
-        
-        if ($(this).prop('checked')) {
-            $(this).attr('value', "true");
-        } else {
-            $(this).attr('value', "false");
-        }
-        console.log($(this).val());
-    });
-</script>*@
+<script>
+    function hello() {
+        $('#content td').highlight($('#searchbox').val());
+    }
+</script>
