@@ -13,6 +13,7 @@
     </tr>
     @foreach (var item in Model)
     {
+
         if (item.IsUpcoming)
         {
             <tr>
@@ -21,6 +22,7 @@
                 <td>@Html.DisplayFor(x => item.Participants)</td>
             </tr>
         }
+
 
     }
 </table>

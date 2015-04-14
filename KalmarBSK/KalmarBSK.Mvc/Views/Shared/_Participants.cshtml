@@ -1,0 +1,12 @@
+﻿@model IEnumerable<KalmarBSK.DataAccess.Member>
+
+
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            @(item.FirstName + " " + item.LastName)
+        </li>
+    }
+</ul>

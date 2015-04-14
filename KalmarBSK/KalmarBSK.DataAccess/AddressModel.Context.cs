@@ -26,5 +26,6 @@ namespace KalmarBSK.DataAccess
         }
     
         public virtual DbSet<Meeting> Meetings { get; set; }
+        public virtual DbSet<Member> Members { get; set; }
     }
 }

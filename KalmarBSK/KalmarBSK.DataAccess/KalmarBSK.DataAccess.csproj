@@ -66,6 +66,9 @@
     <Compile Include="Meeting.cs">
       <DependentUpon>AddressModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Member.cs">
+      <DependentUpon>AddressModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Partials\Meeting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

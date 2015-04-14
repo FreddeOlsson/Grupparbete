@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="843b7b355dba47229bbfa2a89ac59e4d" Name="Diagram1">
         <EntityTypeShape EntityType="KalmarBSKModel.Meeting" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KalmarBSKModel.Member" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

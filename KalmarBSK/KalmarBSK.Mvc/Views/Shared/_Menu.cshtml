@@ -1,6 +1,66 @@
-﻿<ul class="nav nav-pills nav-stacked">
-    <li role="presentation"><a href="@Url.Action("Index")">Index</a></li>
-    <li role="presentation"><a href="@Url.Action("Meetings")">Möten</a></li>
-    <li role="presentation"><a href="@Url.Action("Members")">Medlemmar</a></li>
-    <li role="presentation"><a href="@Url.Action("SearchFilter")">Sök och bläddra</a></li>
-</ul>
+﻿@*<ul class="nav nav-pills nav-stacked">
+        <li role="presentation"><a href="@Url.Action("Index")">Index</a></li>
+        <li role="presentation"><a href="@Url.Action("Meetings")">Möten</a></li>
+        <li role="presentation"><a href="@Url.Action("Members")">Medlemmar</a></li>
+        <li role="presentation"><a href="@Url.Action("SearchFilter")">Sök och bläddra</a></li>
+    </ul>*@
+
+
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h2>Kalmars Brädspelsklubb</h2></div>
+    <div class="panel-body">
+    </div>
+
+    <!-- List group -->
+    <div class="list-group">
+        <a class="list-group-item" href="@Url.Action("Index")">Hem</a>
+        <a class="list-group-item" href="@Url.Action("Meetings")">Möten</a>
+        <a class="list-group-item" href="@Url.Action("Members")">Medlemmar</a>
+        <a class="list-group-item" href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Sök och bläddra</a>
+    </div>
+    
+</div>
+<div class="collapse" id="collapseExample">
+    <div class="well">
+
+        @using (Ajax.BeginForm("SearchFilter", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "content", InsertionMode = InsertionMode.Replace }))
+        {
+
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for..." name="search">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Go!</button>
+                </span>
+            </div>
+
+    <div class="checkbox">
+        <label>
+            <input class="check-box" type="checkbox" name="members" value="true" checked>
+            Inkludera medlemmar
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input class="check-box" type="checkbox" name="meetings" value="true" checked>
+            Inkludera möten
+        </label>
+    </div>
+
+        }
+
+
+    </div>
+</div>
+
+@*<script>
+    $('.check-box').change(function () {
+        
+        if ($(this).prop('checked')) {
+            $(this).attr('value', "true");
+        } else {
+            $(this).attr('value', "false");
+        }
+        console.log($(this).val());
+    });
+</script>*@

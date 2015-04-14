@@ -98,6 +98,8 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -109,6 +111,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -122,7 +125,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Home\Meetings.cshtml" />
     <Content Include="Views\Home\Members.cshtml" />
-    <Content Include="Views\Home\SearchFilter.cshtml" />
+    <Content Include="Views\Shared\_SearchFilter.cshtml" />
+    <Content Include="Views\Home\CreateMeeting.cshtml" />
+    <Content Include="Views\Shared\_Participants.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -132,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KalmarBSK.DataAccess\KalmarBSK.DataAccess.csproj">

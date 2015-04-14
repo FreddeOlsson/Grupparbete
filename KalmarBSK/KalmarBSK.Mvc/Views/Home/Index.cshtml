@@ -1,12 +1,9 @@
-﻿
+﻿@model KalmarBSK.Mvc.Models.SearchResult
+
 @{
     ViewBag.Title = "Index";
 }
 
-@*<h1>Välkommen till Kalmar Brädspelsklubb!</h1>
-<h3>Vad vill du göra?</h3>
 
-Skapa nya möten
-Lägg till nya medlemmar
-Sök och bläddra*@
 
+@Html.Partial("~/Views/Shared/_SearchFilter.cshtml", Model)

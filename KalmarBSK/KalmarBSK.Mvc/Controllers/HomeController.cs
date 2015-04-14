@@ -1,4 +1,5 @@
 ﻿using KalmarBSK.DataAccess;
+using KalmarBSK.Mvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,14 @@ namespace KalmarBSK.Mvc.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            SearchResult sr = new SearchResult();
+            using (var ctx = new KalmarBSKEntities())
+            {
+                sr.Meetings = ctx.Meetings.Take(20).ToList();
+                sr.Members = ctx.Members.Take(20).ToList();
+            }
+
+            return View(sr);
         }
 
         public ActionResult Meetings()
@@ -27,27 +35,60 @@ namespace KalmarBSK.Mvc.Controllers
 
         public ActionResult Members()
         {
-            return View();
-        }
-
-
-        public ActionResult SearchFilter()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult SearchFilter(string search)
-        {
-            List<Meeting> list;
+            List<Member> list;
             using (var ctx = new KalmarBSKEntities())
             {
-                list = ctx.Meetings.Where(x => x.Location.Contains(search)).ToList();
+                list = ctx.Members.Take(20).ToList();
             }
             return View(list);
         }
-        
 
+
+        public ActionResult SearchFilter(string search, bool members = false, bool meetings = false)
+        {
+            SearchResult sr = new SearchResult();
+            using (var ctx = new KalmarBSKEntities())
+            {
+                if (meetings)
+                {
+                    sr.Meetings = ctx.Meetings.ToList(); 
+                }
+                if (members)
+                {
+                    sr.Members = ctx.Members.ToList(); 
+                }
+            }
+            if (!string.IsNullOrEmpty(search))
+            {
+                if (meetings)
+                {
+
+                    sr.Meetings = sr.Meetings.Where(x => x.Location.Contains(search)).ToList();
+                    
+                }
+                if (members)
+                {
+
+                    sr.Members = sr.Members.Where(x => x.FirstName.Contains(search)).ToList();
+                    
+                }
+            }
+
+
+
+
+            return PartialView("~/Views/Shared/_SearchFilter.cshtml", sr);
+        }
+
+        public ActionResult GetParticipants(int number)
+        {
+            List<Member> list;
+            using (var ctx = new KalmarBSKEntities())
+            {
+                list = ctx.Members.Take(number).ToList();
+            }
+            return PartialView("~/Views/Shared/_Participants.cshtml", list);
+        }
 
     }
 }
