@@ -1,11 +1,4 @@
-﻿@*<ul class="nav nav-pills nav-stacked">
-        <li role="presentation"><a href="@Url.Action("Index")">Index</a></li>
-        <li role="presentation"><a href="@Url.Action("Meetings")">Möten</a></li>
-        <li role="presentation"><a href="@Url.Action("Members")">Medlemmar</a></li>
-        <li role="presentation"><a href="@Url.Action("SearchFilter")">Sök och bläddra</a></li>
-    </ul>*@
-
-
+﻿
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading"><h2>Kalmars Brädspelsklubb</h2></div>
@@ -14,10 +7,10 @@
 
     <!-- List group -->
     <div class="list-group">
-        <a class="list-group-item" href="@Url.Action("Index")">Hem</a>
-        <a class="list-group-item" href="@Url.Action("Meetings")">Möten</a>
-        <a class="list-group-item" href="@Url.Action("Members")">Medlemmar</a>
-        <a class="list-group-item" href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Sök och bläddra</a>
+        <a class="list-group-item" href="@Url.Action("Index")"><span class="glyphicon glyphicon-home"></span> Hem</a>
+        <a class="list-group-item" href="@Url.Action("NewMeeting")"><span class="glyphicon glyphicon-calendar"></span> Skapa möte</a>
+        <a class="list-group-item" href="@Url.Action("AddMember")"><span class="glyphicon glyphicon-user"></span> Lägg till medlem</a>
+        <a class="list-group-item" href="#" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><span class="glyphicon glyphicon-search"></span> Sök och bläddra</a>
     </div>
 
 </div>
@@ -36,8 +29,8 @@
 
             <div class="checkbox">
                 <label>
-                    <input class="check-box" type="checkbox" name="members" value="true" data-toggle="collapse" data-target="#member-detail" aria-expanded="false" aria-controls="member-detail">
-                    Inkludera medlemmar
+                    <input class="check-box" type="checkbox" name="members" value="false" data-toggle="collapse" data-target="#member-detail" aria-expanded="false" aria-controls="member-detail">
+                    Excludera medlemmar
                 </label>
             </div>
     <div class="panel panel-default collapse" id="member-detail">
@@ -48,16 +41,16 @@
 
             <div class="checkbox">
                 <label>
-                    <input class="check-box" type="checkbox" name="meetings" value="true" data-toggle="collapse" data-target="#meeting-detail" aria-expanded="false" aria-controls="meeting-detail">
-                    Inkludera möten
+                    <input class="check-box" type="checkbox" name="oldMeetings" value="false" data-toggle="collapse" data-target="#meeting-detail" aria-expanded="false" aria-controls="meeting-detail">
+                    Excludera gamla möten
                 </label>
             </div>
             <div class="panel panel-default collapse" id="meeting-detail">
                 <div class="panel-body">
                     <div class="checkbox">
                         <label>
-                            <input class="check-box" type="checkbox" name="oldMeetings" value="true">
-                            Inkludera gamla möten
+                            <input class="check-box" type="checkbox" name="meetings" value="false">
+                            Excludera alla möten
                         </label>
                     </div>
                 </div>

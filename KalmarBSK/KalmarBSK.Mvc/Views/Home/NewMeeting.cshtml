@@ -1,0 +1,81 @@
+﻿@model KalmarBSK.DataAccess.GameLocation
+
+@{
+    ViewBag.Title = "NewMeeting";
+}
+
+
+
+
+
+
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h2><span class="glyphicon glyphicon-calendar"></span> Skapa nytt möte</h2></div>
+            <div class="panel-body">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+
+                    <div class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Adress, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Adress, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                                        @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Skapa möte" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+
+                                @Html.EditorFor(model => model.MeetingParticipants)
+
+
+                            </div>
+                        </div>
+
+
+                        
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    
+
+    $(function () { 
+        $('.datepicker').datepicker({
+            todayBtn: "linked",
+            language: "sv",
+            todayHighlight: true,
+            orientation: "top auto"
+        });
+    });
+
+</script>

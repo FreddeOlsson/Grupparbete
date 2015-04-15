@@ -8,6 +8,9 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
+using System.Threading;
+using System.Web.UI;
 
 namespace KalmarBSK.Mvc.Controllers
 {
@@ -18,8 +21,8 @@ namespace KalmarBSK.Mvc.Controllers
             SearchResult sr = new SearchResult();
             using (var ctx = new KlubbdatabasEntities())
             {
-                sr.Meetings = ctx.GameLocations.Include(x => x.MeetingParticipants).Take(20).ToList();
-                sr.Members = ctx.Personers.Take(20).ToList();
+                sr.Meetings = ctx.GameLocations.Include(x => x.MeetingParticipants).ToList();
+                sr.Members = ctx.Personers.ToList();
             }
 
             return View(sr);
@@ -47,11 +50,13 @@ namespace KalmarBSK.Mvc.Controllers
         }
 
 
-        public ActionResult SearchFilter(string search, bool members = false, bool meetings = false, bool oldMeetings = false)
+        public ActionResult SearchFilter(string search, bool members = true, bool meetings = true, bool oldMeetings = true)
         {
+            search = search.ToUpper();
             SearchResult sr = new SearchResult();
             using (var ctx = new KlubbdatabasEntities())
             {
+                ctx.Configuration.ProxyCreationEnabled = false;
                 if (meetings)
                 {
                     sr.Meetings = ctx.GameLocations.Include(x => x.MeetingParticipants).ToList();
@@ -62,7 +67,7 @@ namespace KalmarBSK.Mvc.Controllers
                 }
                 if (members)
                 {
-                    sr.Members = ctx.Personers.ToList(); 
+                    sr.Members = ctx.Personers.ToList();
                 }
             }
             if (!string.IsNullOrEmpty(search))
@@ -70,14 +75,14 @@ namespace KalmarBSK.Mvc.Controllers
                 if (meetings)
                 {
 
-                    sr.Meetings = sr.Meetings.Where(x => x.Adress.Contains(search)).ToList();
-                    
+                    sr.Meetings = sr.Meetings.Where(x => x.Adress.ToUpper().Contains(search)).ToList();
+
                 }
                 if (members)
                 {
 
-                    sr.Members = sr.Members.Where(x => x.Namn.Contains(search)).ToList();
-                    
+                    sr.Members = sr.Members.Where(x => x.Namn.ToUpper().Contains(search) || x.Adress.ToUpper().Contains(search)).ToList();
+
                 }
             }
 
@@ -89,29 +94,167 @@ namespace KalmarBSK.Mvc.Controllers
 
         public ActionResult GetParticipants(string JSONModel)
         {
-            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ICollection<MeetingParticipant>));
-            var yourobject = (ICollection<MeetingParticipant>)ser.ReadObject(GenerateStreamFromString(JSONModel));
-
+            List<MeetingParticipant> list = JsonConvert.DeserializeObject<List<MeetingParticipant>>(JSONModel);
 
             List<Personer> participants;
-            //using (var ctx = new KlubbdatabasEntities())
-            //{
-            //    participants = ctx.Personers.Join<Personer, MeetingParticipant, int, Personer>(list
-            //        , x => x.ID
-            //        , y => y.PersonId
-            //        , (x, y) => new Personer { Adress = x.Adress, ID = x.ID, Namn = x.Namn, Telefon = x.Telefon }).ToList();
-            //}
-            return PartialView("~/Views/Shared/_Participants.cshtml");
+            using (var ctx = new KlubbdatabasEntities())
+            {
+
+                var pers = ctx.Personers.ToList();
+
+                participants = pers.Join<Personer, MeetingParticipant, int, Personer>(list
+                    , x => x.ID
+                    , y => y.PersonId
+                    , (x, y) => new Personer { Adress = x.Adress, ID = x.ID, Namn = x.Namn, Telefon = x.Telefon }).ToList();
+            }
+
+            return PartialView("~/Views/Shared/_Participants.cshtml", participants);
         }
 
-        private Stream GenerateStreamFromString(string s)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddMember(Personer person)
         {
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(s);
-            writer.Flush();
-            stream.Position = 0;
-            return stream;
+            if (!ModelState.IsValid)
+            {
+                return View(person);
+            }
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                ctx.Personers.Add(person);
+                ctx.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
+        public ActionResult AddMember()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditMember(Personer person)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(person);
+            }
+
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                var model = ctx.Personers.Find(person.ID);
+                if (TryUpdateModel(model))
+                {
+                    ctx.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult EditMember(int id)
+        {
+            Personer person;
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                person = ctx.Personers.Where(x => x.ID == id).FirstOrDefault();
+            }
+            return View(person);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteMember(Personer person)
+        {
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                var model = ctx.Personers.Find(person.ID);
+                model.Active = false;
+                ctx.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DeleteMember(int id)
+        {
+            Personer person;
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                person = ctx.Personers.Where(x => x.ID == id).FirstOrDefault();
+            }
+            return View(person);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewMeeting(GameLocation meeting)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(meeting);
+            }
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                ctx.GameLocations.Add(meeting);
+                ctx.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult NewMeeting()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditMeeting(GameLocation meeting, int[] removeId)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(meeting);
+            //}
+
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                var model = ctx.GameLocations.Find(meeting.ID);
+                if (TryUpdateModel(model))
+                {
+                    ctx.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult EditMeeting(int id)
+        {
+            GameLocation meeting;
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                //meeting = ctx.GameLocations.Where(x => x.ID == id).Include(y => y.MeetingParticipants.Select(p => p.Personer)).FirstOrDefault();
+                meeting = (GameLocation)ctx.GameLocations.Where(x => x.ID == id).Include("MeetingParticipants.Personer").FirstOrDefault();
+            }
+            return View(meeting);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteMeeting(GameLocation meeting)
+        {
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                var model = ctx.GameLocations.Find(meeting.ID);
+                ctx.GameLocations.Remove(model);
+                ctx.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        public ActionResult DeleteMeeting(int id)
+        {
+            GameLocation meeting;
+            using (var ctx = new KlubbdatabasEntities())
+            {
+                meeting = ctx.GameLocations.Where(x => x.ID == id).FirstOrDefault();
+            }
+            return View(meeting);
+        }
+
     }
 }

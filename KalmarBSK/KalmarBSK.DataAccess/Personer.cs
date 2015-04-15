@@ -23,6 +23,7 @@ namespace KalmarBSK.DataAccess
         public string Namn { get; set; }
         public string Adress { get; set; }
         public string Telefon { get; set; }
+        public bool Active { get; set; }
     
         public virtual ICollection<MeetingParticipant> MeetingParticipants { get; set; }
     }

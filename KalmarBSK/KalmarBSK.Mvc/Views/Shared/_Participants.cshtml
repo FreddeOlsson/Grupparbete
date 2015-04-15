@@ -2,11 +2,16 @@
 
 
 
-<ul>
-    @foreach (var item in Model)
-    {
-        <li>
-            @(item.Namn)
-        </li>
-    }
-</ul>
+
+<div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    @(item.Namn)
+                </li>
+            }
+        </ul>
+    </div>
+</div>

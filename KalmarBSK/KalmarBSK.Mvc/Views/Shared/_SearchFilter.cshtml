@@ -3,21 +3,24 @@
 
 
 
-<div id="participants-modal"></div>
+
+
 <div class="row">
     @if (Model.Meetings != null)
     {
         <div class="col-lg-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h2>Kommande Möten</h2></div>
+                <div class="panel-heading"><h2><span class="glyphicon glyphicon-calendar"></span> Kommande Möten</h2></div>
                 <div class="panel-body">
                 </div>
 
                 <table class="table table-hover">
                     <tr>
+                        <th></th>
                         <th>@Html.DisplayNameFor(x => x.Meetings[0].Datum)</th>
                         <th>@Html.DisplayNameFor(x => x.Meetings[0].Adress)</th>
                         <th>@Html.DisplayNameFor(x => x.Meetings[0].MeetingParticipants)</th>
+                        <th></th>
                     </tr>
                     @foreach (var item in Model.Meetings)
                     {
@@ -25,10 +28,11 @@
                         if (item.IsUpcoming)
                         {
                             <tr>
+                                <td><a href="@Url.Action("EditMeeting", new { id = item.ID })"><span class="glyphicon glyphicon-edit"></span></a></td>
                                 <td>@Html.DisplayFor(x => item.Datum)</td>
                                 <td>@Html.DisplayFor(x => item.Adress)</td>
-                                @*<td>@Html.DisplayFor(x => item.MeetingParticipants.Count)</td>*@
-                                <td>@Ajax.ActionLink("" + Html.DisplayFor(x => item.MeetingParticipants.Count), "GetParticipants", new { JSONModel = Json.Encode(item.MeetingParticipants.ToList()), }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "participants-modal", InsertionMode = InsertionMode.Replace })</td>
+                                <td>@Html.DisplayFor(x => item.MeetingParticipants.Count)</td>
+                                <td><a href="@Url.Action("DeleteMeeting", new { id = item.ID })"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
                             </tr>
                         }
 
@@ -40,7 +44,7 @@
             @if (Model.Meetings.Where(x => x.IsUpcoming == false).Count() > 0)
             {
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h2>Gamla Möten</h2></div>
+                    <div class="panel-heading"><h2><span class="glyphicon glyphicon-calendar"></span> Gamla Möten</h2></div>
                     <div class="panel-body">
                     </div>
 
@@ -49,6 +53,7 @@
                             <th>@Html.DisplayNameFor(x => x.Meetings[0].Datum)</th>
                             <th>@Html.DisplayNameFor(x => x.Meetings[0].Adress)</th>
                             <th>@Html.DisplayNameFor(x => x.Meetings[0].MeetingParticipants)</th>
+                            <th></th>
                         </tr>
                         @foreach (var item in Model.Meetings)
                         {
@@ -58,6 +63,7 @@
                                     <td>@Html.DisplayFor(x => item.Datum)</td>
                                     <td>@Html.DisplayFor(x => item.Adress)</td>
                                     <td>@Html.DisplayFor(x => item.MeetingParticipants.Count)</td>
+                                    <td><a href="@Url.Action("DeleteMeeting", new { id = item.ID })"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
                                 </tr>
                             }
 
@@ -74,24 +80,32 @@
     {
         <div class="col-lg-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h2>Medlemmar</h2></div>
+                <div class="panel-heading"><h2><span class="glyphicon glyphicon-user"></span> Medlemmar</h2></div>
                 <div class="panel-body">
                 </div>
 
                 <table class="table table-hover">
                     <tr>
+                        <th></th>
                         <th>@Html.DisplayNameFor(x => x.Members[0].Namn)</th>
                         <th>@Html.DisplayNameFor(x => x.Members[0].Adress)</th>
                         <th>@Html.DisplayNameFor(x => x.Members[0].Telefon)</th>
+                        <th></th>
                     </tr>
                     @foreach (var item in Model.Members)
                     {
+                        if (item.Active)
+                        {
+                            <tr>
+                                <td><a href="@Url.Action("EditMember", new { id = item.ID })"><span class="glyphicon glyphicon-edit"></span></a></td>
+                                <td>@Html.DisplayFor(x => item.Namn)</td>
+                                <td>@Html.DisplayFor(x => item.Adress)</td>
+                                <td>@Html.DisplayFor(x => item.Telefon)</td>
+                                @*<td>@Ajax.ActionLink("<span class='glyphicon glyphicon-trash'></span>", "DeleteMember", new { id = item.ID }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "participants-modal", InsertionMode = InsertionMode.Replace }, new {data_toggle = "modal", data_target = ".bs-example-modal-sm" })</td>*@
+                                <td><a href="@Url.Action("DeleteMember", new { id = item.ID })"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
+                            </tr>
+                        }
 
-                        <tr>
-                            <td>@Html.DisplayFor(x => item.Namn)</td>
-                            <td>@Html.DisplayFor(x => item.Adress)</td>
-                            <td>@Html.DisplayFor(x => item.Telefon)</td>
-                        </tr>
 
 
                     }
@@ -101,3 +115,5 @@
     }
 
 </div>
+
+
