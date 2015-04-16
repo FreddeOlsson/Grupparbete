@@ -1,0 +1,31 @@
+﻿@model KalmarBSK.Mvc.Models.AddMember
+
+
+
+<table class="table table-hover">
+    <tr>
+        <th>@Html.DisplayNameFor(x => x.AvailableMembers[0].Namn)</th>
+        <th>@Html.DisplayNameFor(x => x.AvailableMembers[0].Adress)</th>
+        <th>@Html.DisplayNameFor(x => x.AvailableMembers[0].Telefon)</th>
+        <th></th>
+    </tr>
+    @for (var i = 0; i < Model.AvailableMembers.Count; i++)
+    {
+        if (Model.AvailableMembers[i].Active)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x => Model.AvailableMembers[i].Namn)</td>
+                <td>@Html.DisplayFor(x => Model.AvailableMembers[i].Adress)</td>
+                <td>
+                    @Html.DisplayFor(x => Model.AvailableMembers[i].Telefon)
+                    @Html.HiddenFor(x => Model.AvailableMembers[i].ID)
+                </td>
+                <td>@Html.CheckBoxFor(x => Model.AvailableMembers[i].Add)</td>
+            </tr>
+        }
+
+
+
+    }
+</table>
+@Html.HiddenFor(x => Model.CurrentMeetingId)

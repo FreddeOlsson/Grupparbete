@@ -13,10 +13,10 @@ namespace KalmarBSK.DataAccess
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KlubbdatabasEntities : DbContext
+    public partial class KlubbdatabasEntities2 : DbContext
     {
-        public KlubbdatabasEntities()
-            : base("name=KlubbdatabasEntities")
+        public KlubbdatabasEntities2()
+            : base("name=KlubbdatabasEntities2")
         {
         }
     

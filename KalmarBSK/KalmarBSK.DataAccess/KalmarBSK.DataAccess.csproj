@@ -53,53 +53,51 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameLocation.cs">
-      <DependentUpon>KalmarBSKModel.tt</DependentUpon>
+      <DependentUpon>KlubbdatabasModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="KalmarBSKModel.Context.cs">
+    <Compile Include="KlubbdatabasModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KalmarBSKModel.Context.tt</DependentUpon>
+      <DependentUpon>KlubbdatabasModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="KalmarBSKModel.cs">
+    <Compile Include="KlubbdatabasModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KalmarBSKModel.tt</DependentUpon>
+      <DependentUpon>KlubbdatabasModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="KalmarBSKModel.Designer.cs">
+    <Compile Include="KlubbdatabasModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>KalmarBSKModel.edmx</DependentUpon>
+      <DependentUpon>KlubbdatabasModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="MeetingParticipant.cs">
-      <DependentUpon>KalmarBSKModel.tt</DependentUpon>
+      <DependentUpon>KlubbdatabasModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Partials\GameLocation.cs" />
     <Compile Include="Partials\Personer.cs" />
     <Compile Include="Personer.cs">
-      <DependentUpon>KalmarBSKModel.tt</DependentUpon>
+      <DependentUpon>KlubbdatabasModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="KalmarBSKModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>KalmarBSKModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="KalmarBSKModel.Context.tt">
+    <EntityDeploy Include="KlubbdatabasModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KlubbdatabasModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="KlubbdatabasModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KalmarBSKModel.edmx</DependentUpon>
-      <LastGenOutput>KalmarBSKModel.Context.cs</LastGenOutput>
+      <DependentUpon>KlubbdatabasModel.edmx</DependentUpon>
+      <LastGenOutput>KlubbdatabasModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="KalmarBSKModel.edmx.diagram">
-      <DependentUpon>KalmarBSKModel.edmx</DependentUpon>
+    <None Include="KlubbdatabasModel.edmx.diagram">
+      <DependentUpon>KlubbdatabasModel.edmx</DependentUpon>
     </None>
-    <None Include="KalmarBSKModel.tt">
+    <None Include="KlubbdatabasModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>KalmarBSKModel.edmx</DependentUpon>
-      <LastGenOutput>KalmarBSKModel.cs</LastGenOutput>
+      <DependentUpon>KlubbdatabasModel.edmx</DependentUpon>
+      <LastGenOutput>KlubbdatabasModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

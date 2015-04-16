@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-lg-10">
-        <div class="panel panel-default">
+        <div class="panel panel-warning">
             <div class="panel-heading"><h2><span class="glyphicon glyphicon-edit"></span> Ändra möte</h2></div>
             <div class="panel-body">
 
@@ -30,7 +30,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control datepicker" } })
                                         @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -40,43 +40,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <table class="table table-hover">
-                                    <tr>
-
-                                        <th>@Html.DisplayNameFor(x => x.MeetingParticipants.FirstOrDefault().Personer.Namn)</th>
-                                        <th>@Html.DisplayNameFor(x => x.MeetingParticipants.FirstOrDefault().Personer.Adress)</th>
-                                        <th>@Html.DisplayNameFor(x => x.MeetingParticipants.FirstOrDefault().Personer.Telefon)</th>
-                                        <th></th>
-                                    </tr>
-                                    @for (var i = 0; i < Model.MeetingParticipants.Count; i++)
-                                    {
-
-
-                                        <tr class="participants">
-
-                                            <td>@Html.DisplayFor(x => Model.MeetingParticipants.ToList()[i].Personer.Namn)</td>
-                                            <td>@Html.DisplayFor(x => Model.MeetingParticipants.ToList()[i].Personer.Adress)</td>
-                                            <td>@Html.DisplayFor(x => Model.MeetingParticipants.ToList()[i].Personer.Telefon)</td>
-                                            <td style="vertical-align:middle">
-                                                <a href="#">
-                                                    <span class="glyphicon glyphicon-remove text-danger"></span>
-                                                </a>
-                                            </td>
-                                        </tr>
-
-
-
-                                    }
-                                </table>
+                            <div class="col-lg-6" id="delete-p">
+                                @Html.Partial("~/Views/Shared/_Participants.cshtml", Model.MeetingParticipants)
                             </div>
                         </div>
 
-                        @Html.HiddenFor(model => model.ID)
 
 
 
-                        
                     </div>
                 }
 
@@ -88,6 +59,16 @@
 </div>
 
 <script>
+
+    $(function () {
+        $('.datepicker').datepicker({
+            todayBtn: "linked",
+            language: "sv",
+            todayHighlight: true,
+            orientation: "top auto"
+        });
+    });
+
     $("table").on("click", ".glyphicon-remove", function () {
         if ($(".participants").length > 1) {
             $(this).closest(".participants").remove();
@@ -96,3 +77,4 @@
         }
     });
 </script>
+

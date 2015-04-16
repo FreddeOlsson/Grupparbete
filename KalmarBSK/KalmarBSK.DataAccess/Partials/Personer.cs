@@ -11,7 +11,7 @@ namespace KalmarBSK.DataAccess
     public partial class Personer
     {
 
-
+        public bool Add { get; set; }
 
         private sealed class Metadata
         {

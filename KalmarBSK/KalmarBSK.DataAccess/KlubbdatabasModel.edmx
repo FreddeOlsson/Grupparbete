@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="KlubbdatabasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="KlubbdatabasModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="GameLocation">
           <Key>
             <PropertyRef Name="ID" />
@@ -32,7 +32,9 @@
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_MeetingParticipants_GameLocation_GameLocationId">
-          <End Role="GameLocation" Type="Self.GameLocation" Multiplicity="1" />
+          <End Role="GameLocation" Type="Self.GameLocation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MeetingParticipant" Type="Self.MeetingParticipant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GameLocation">
@@ -44,7 +46,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MeetingParticipants_Personer_PersonId">
-          <End Role="Personer" Type="Self.Personer" Multiplicity="1" />
+          <End Role="Personer" Type="Self.Personer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MeetingParticipant" Type="Self.MeetingParticipant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Personer">
@@ -68,7 +72,8 @@
             <End Role="MeetingParticipant" EntitySet="MeetingParticipant" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="KlubbdatabasModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -88,8 +93,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GameLocationId" Type="Int32" Nullable="false" />
           <Property Name="PersonId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="GameLocation" Relationship="Self.FK_MeetingParticipants_GameLocation_GameLocationId" FromRole="MeetingParticipant" ToRole="GameLocation" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-          <NavigationProperty Name="Personer" Relationship="Self.FK_MeetingParticipants_Personer_PersonId" FromRole="MeetingParticipant" ToRole="Personer" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <NavigationProperty Name="GameLocation" Relationship="Self.FK_MeetingParticipants_GameLocation_GameLocationId" FromRole="MeetingParticipant" ToRole="GameLocation" />
+          <NavigationProperty Name="Personer" Relationship="Self.FK_MeetingParticipants_Personer_PersonId" FromRole="MeetingParticipant" ToRole="Personer" />
         </EntityType>
         <EntityType Name="Personer">
           <Key>
@@ -99,11 +104,13 @@
           <Property Name="Namn" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Adress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Telefon" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MeetingParticipants" Relationship="Self.FK_MeetingParticipants_Personer_PersonId" FromRole="Personer" ToRole="MeetingParticipant" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="MeetingParticipants" Relationship="Self.FK_MeetingParticipants_Personer_PersonId" FromRole="Personer" ToRole="MeetingParticipant" />
         </EntityType>
         <Association Name="FK_MeetingParticipants_GameLocation_GameLocationId">
-          <End Role="GameLocation" Type="Self.GameLocation" Multiplicity="1" />
+          <End Role="GameLocation" Type="Self.GameLocation" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MeetingParticipant" Type="Self.MeetingParticipant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GameLocation">
@@ -115,7 +122,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MeetingParticipants_Personer_PersonId">
-          <End Role="Personer" Type="Self.Personer" Multiplicity="1" />
+          <End Role="Personer" Type="Self.Personer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MeetingParticipant" Type="Self.MeetingParticipant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Personer">
@@ -126,7 +135,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KlubbdatabasEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="KlubbdatabasEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="GameLocations" EntityType="Self.GameLocation" />
           <EntitySet Name="MeetingParticipants" EntityType="Self.MeetingParticipant" />
           <EntitySet Name="Personers" EntityType="Self.Personer" />
@@ -144,7 +153,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="KlubbdatabasModelStoreContainer" CdmEntityContainer="KlubbdatabasEntities">
+        <EntityContainerMapping StorageEntityContainer="KlubbdatabasModelStoreContainer" CdmEntityContainer="KlubbdatabasEntities2">
           <EntitySetMapping Name="GameLocations">
             <EntityTypeMapping TypeName="KlubbdatabasModel.GameLocation">
               <MappingFragment StoreEntitySet="GameLocation">
@@ -166,11 +175,11 @@
           <EntitySetMapping Name="Personers">
             <EntityTypeMapping TypeName="KlubbdatabasModel.Personer">
               <MappingFragment StoreEntitySet="Personer">
-                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Namn" ColumnName="Namn" />
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

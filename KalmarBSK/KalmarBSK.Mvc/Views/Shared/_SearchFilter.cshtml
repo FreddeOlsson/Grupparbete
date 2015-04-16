@@ -9,7 +9,7 @@
     @if (Model.Meetings != null)
     {
         <div class="col-lg-6">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading"><h2><span class="glyphicon glyphicon-calendar"></span> Kommande Möten</h2></div>
                 <div class="panel-body">
                 </div>
@@ -32,7 +32,7 @@
                                 <td>@Html.DisplayFor(x => item.Datum)</td>
                                 <td>@Html.DisplayFor(x => item.Adress)</td>
                                 <td>@Html.DisplayFor(x => item.MeetingParticipants.Count)</td>
-                                <td><a href="@Url.Action("DeleteMeeting", new { id = item.ID })"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
+                                <td><a href="@Url.Action("DeleteMeeting", new { id = item.ID })"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>
                             </tr>
                         }
 
@@ -43,13 +43,14 @@
 
             @if (Model.Meetings.Where(x => x.IsUpcoming == false).Count() > 0)
             {
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading"><h2><span class="glyphicon glyphicon-calendar"></span> Gamla Möten</h2></div>
                     <div class="panel-body">
                     </div>
 
                     <table class="table table-hover">
                         <tr>
+                            <th></th>
                             <th>@Html.DisplayNameFor(x => x.Meetings[0].Datum)</th>
                             <th>@Html.DisplayNameFor(x => x.Meetings[0].Adress)</th>
                             <th>@Html.DisplayNameFor(x => x.Meetings[0].MeetingParticipants)</th>
@@ -60,10 +61,11 @@
                             if (!item.IsUpcoming)
                             {
                                 <tr>
+                                    <td><a href="@Url.Action("EditMeeting", new { id = item.ID })"><span class="glyphicon glyphicon-edit"></span></a></td>
                                     <td>@Html.DisplayFor(x => item.Datum)</td>
                                     <td>@Html.DisplayFor(x => item.Adress)</td>
                                     <td>@Html.DisplayFor(x => item.MeetingParticipants.Count)</td>
-                                    <td><a href="@Url.Action("DeleteMeeting", new { id = item.ID })"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
+                                    <td><a href="@Url.Action("DeleteMeeting", new { id = item.ID })"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>
                                 </tr>
                             }
 
@@ -79,7 +81,7 @@
     @if (Model.Members != null)
     {
         <div class="col-lg-6">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading"><h2><span class="glyphicon glyphicon-user"></span> Medlemmar</h2></div>
                 <div class="panel-body">
                 </div>
@@ -102,7 +104,7 @@
                                 <td>@Html.DisplayFor(x => item.Adress)</td>
                                 <td>@Html.DisplayFor(x => item.Telefon)</td>
                                 @*<td>@Ajax.ActionLink("<span class='glyphicon glyphicon-trash'></span>", "DeleteMember", new { id = item.ID }, new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "participants-modal", InsertionMode = InsertionMode.Replace }, new {data_toggle = "modal", data_target = ".bs-example-modal-sm" })</td>*@
-                                <td><a href="@Url.Action("DeleteMember", new { id = item.ID })"><span class="glyphicon glyphicon-trash text-danger"></span></a></td>
+                                <td><a href="@Url.Action("DeleteMember", new { id = item.ID })"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>
                             </tr>
                         }
 

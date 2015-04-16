@@ -18,6 +18,7 @@ namespace KalmarBSK.DataAccess
             [Display(Name="Plats")]
             public string Adress { get; set; }
             [Required]
+            [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}")]
             public Nullable<System.DateTime> Datum { get; set; }
             [Display(Name = "Deltagare")]
             public ICollection<MeetingParticipant> MeetingParticipants { get; set; }

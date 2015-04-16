@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="15fbed4a1e0549638877643f70ae468a" Name="Diagram1">
+      <Diagram DiagramId="63d3ab1870bd4276bcd76d6e20bca619" Name="Diagram1">
         <EntityTypeShape EntityType="KlubbdatabasModel.GameLocation" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlubbdatabasModel.MeetingParticipant" Width="1.5" PointX="5.125" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="KlubbdatabasModel.Personer" Width="2.25" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlubbdatabasModel.MeetingParticipant" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="KlubbdatabasModel.Personer" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
         <AssociationConnector Association="KlubbdatabasModel.FK_MeetingParticipants_GameLocation_GameLocationId" ManuallyRouted="false" />
         <AssociationConnector Association="KlubbdatabasModel.FK_MeetingParticipants_Personer_PersonId" ManuallyRouted="false" />
       </Diagram>

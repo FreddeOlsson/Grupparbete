@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -17,3 +16,11 @@ textarea {
 }
 
 .highlight { background-color: yellow }
+
+
+#header {
+background-color: rgb(87, 116, 146);
+color: white;
+padding: 10px 15px;
+margin-bottom: 20px;
+}
