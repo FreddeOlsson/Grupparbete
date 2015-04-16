@@ -40,7 +40,6 @@ namespace KalmarBSK.Mvc.Controllers
             return View(list);
         }
 
-
         public ActionResult Members()
         {
             List<Personer> list;
