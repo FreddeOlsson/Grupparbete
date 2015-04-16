@@ -1,7 +1,5 @@
 ﻿@model KalmarBSK.Mvc.Models.AddMember
 
-
-
 <table class="table table-hover">
     <tr>
         <th>@Html.DisplayNameFor(x => x.AvailableMembers[0].Namn)</th>
@@ -23,9 +21,6 @@
                 <td>@Html.CheckBoxFor(x => Model.AvailableMembers[i].Add)</td>
             </tr>
         }
-
-
-
     }
 </table>
 @Html.HiddenFor(x => Model.CurrentMeetingId)

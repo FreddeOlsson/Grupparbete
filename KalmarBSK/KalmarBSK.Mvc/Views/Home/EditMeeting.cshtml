@@ -4,18 +4,14 @@
     ViewBag.Title = "EditMeeting";
 }
 
-
-
 <div class="row">
     <div class="col-lg-10">
         <div class="panel panel-warning">
             <div class="panel-heading"><h2><span class="glyphicon glyphicon-edit"></span> Ändra möte</h2></div>
             <div class="panel-body">
-
                 @using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
-
                     <div class="form-horizontal">
                         <div class="row">
                             <div class="col-lg-4">
@@ -26,7 +22,6 @@
                                         @Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
@@ -44,16 +39,9 @@
                                 @Html.Partial("~/Views/Shared/_Participants.cshtml", Model.MeetingParticipants)
                             </div>
                         </div>
-
-
-
-
                     </div>
                 }
-
-
             </div>
-
         </div>
     </div>
 </div>

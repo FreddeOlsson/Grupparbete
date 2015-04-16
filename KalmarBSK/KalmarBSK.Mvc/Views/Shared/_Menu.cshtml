@@ -1,11 +1,8 @@
 ﻿
 <div class="panel panel-primary">
-    <!-- Default panel contents -->
     <div class="panel-heading"><h2><span class="glyphicon glyphicon-cog"></span> Meny</h2></div>
     <div class="panel-body">
     </div>
-
-    <!-- List group -->
     <div class="list-group">
         <a class="list-group-item" href="@Url.Action("Index")"><span class="glyphicon glyphicon-home"></span> Hem</a>
         <a class="list-group-item" href="@Url.Action("NewMeeting")"><span class="glyphicon glyphicon-calendar"></span> Skapa möte</a>
@@ -16,7 +13,6 @@
 </div>
 <div class="collapse" id="collapseExample">
     <div class="well">
-
         @using (Ajax.BeginForm("SearchFilter", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "content", InsertionMode = InsertionMode.Replace, OnSuccess = "hello()" }))
         {
 
@@ -33,12 +29,11 @@
                     Excludera medlemmar
                 </label>
             </div>
-    <div class="panel panel-default collapse" id="member-detail">
-        <div class="panel-body">
-            ...
-        </div>
-    </div>
-
+            <div class="panel panel-default collapse" id="member-detail">
+                <div class="panel-body">
+                    ...
+                </div>
+            </div>
             <div class="checkbox">
                 <label>
                     <input class="check-box" type="checkbox" name="oldMeetings" value="false" data-toggle="collapse" data-target="#meeting-detail" aria-expanded="false" aria-controls="meeting-detail">
@@ -55,10 +50,7 @@
                     </div>
                 </div>
             </div>
-
         }
-
-
     </div>
 </div>
 

@@ -30,27 +30,6 @@ namespace KalmarBSK.Mvc.Controllers
             return View(sr);
         }
 
-        public ActionResult Meetings()
-        {
-            List<GameLocation> list;
-            using (var ctx = new KlubbdatabasEntities2())
-            {
-                list = ctx.GameLocations.Include(x => x.MeetingParticipants).Take(20).ToList();
-            }
-            return View(list);
-        }
-
-        public ActionResult Members()
-        {
-            List<Personer> list;
-            using (var ctx = new KlubbdatabasEntities2())
-            {
-                list = ctx.Personers.Take(20).ToList();
-            }
-            return View(list);
-        }
-
-
         public ActionResult SearchFilter(string search, bool members = true, bool meetings = true, bool oldMeetings = true)
         {
             search = search.ToUpper();
@@ -86,30 +65,7 @@ namespace KalmarBSK.Mvc.Controllers
 
                 }
             }
-
-
-
-
             return PartialView("~/Views/Shared/_SearchFilter.cshtml", sr);
-        }
-
-        public ActionResult GetParticipants(string JSONModel)
-        {
-            List<MeetingParticipant> list = JsonConvert.DeserializeObject<List<MeetingParticipant>>(JSONModel);
-
-            List<Personer> participants;
-            using (var ctx = new KlubbdatabasEntities2())
-            {
-
-                var pers = ctx.Personers.ToList();
-
-                participants = pers.Join<Personer, MeetingParticipant, int, Personer>(list
-                    , x => x.ID
-                    , y => y.PersonId
-                    , (x, y) => new Personer { Adress = x.Adress, ID = x.ID, Namn = x.Namn, Telefon = x.Telefon }).ToList();
-            }
-
-            return PartialView("~/Views/Shared/_Participants.cshtml", participants);
         }
 
         [HttpPost]
@@ -214,22 +170,12 @@ namespace KalmarBSK.Mvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditMeeting(GameLocation meeting)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(meeting);
-            //}
-
             using (var ctx = new KlubbdatabasEntities2())
             {
                 var model = ctx.GameLocations.Find(meeting.ID);
 
-
-
                 if (TryUpdateModel(model))
                 {
-
-
-
                     ctx.SaveChanges();
                 }
             }
@@ -240,13 +186,12 @@ namespace KalmarBSK.Mvc.Controllers
             GameLocation meeting;
             using (var ctx = new KlubbdatabasEntities2())
             {
-                //meeting = ctx.GameLocations.Where(x => x.ID == id).Include(y => y.MeetingParticipants.Select(p => p.Personer)).FirstOrDefault();
                 meeting = (GameLocation)ctx.GameLocations.Where(x => x.ID == id).Include("MeetingParticipants.Personer").FirstOrDefault();
-                //meeting = ctx.GameLocations.Where(x => x.ID == id).Include(x => x.MeetingParticipants).FirstOrDefault();
 
             }
             return View(meeting);
         }
+
         public ActionResult DeleteParticipant(int participantId, int meetingId)
         {
             ICollection<MeetingParticipant> collection;
@@ -286,7 +231,6 @@ namespace KalmarBSK.Mvc.Controllers
                 }
                 foreach (var item in model.AvailableMembers.Where(x => x.Add))
                 {
-                    //Personer person = ctx.Personers.Where(x => x.ID == item.ID).SingleOrDefault();
                     meeting.MeetingParticipants.Add(new MeetingParticipant { PersonId = item.ID });
                     try
                     {
@@ -306,13 +250,10 @@ namespace KalmarBSK.Mvc.Controllers
                                     ve.ErrorMessage);
                             }
                         }
-                        //return errors;
                     }
                 }
-
                 collection = ctx.MeetingParticipants.Where(x => x.GameLocationId == model.CurrentMeetingId).Include(y => y.Personer).ToList();
             }
-            //return errors;
             return PartialView("~/Views/Shared/_Participants.cshtml", collection);
         }
 

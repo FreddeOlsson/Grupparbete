@@ -10,8 +10,5 @@ namespace KalmarBSK.Mvc.Models
     {
         public List<Personer> AvailableMembers { get; set; }
         public int CurrentMeetingId { get; set; }
-
-
-
     }
 }

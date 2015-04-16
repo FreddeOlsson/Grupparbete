@@ -17,9 +17,9 @@
     <script src="~/Scripts/bootstrap-datepicker.sv.min.js"></script>
 </head>
 <body>
-        <div id="header">
-            <h1>Jag <span class="glyphicon glyphicon-heart text-danger"></span> Kalmar Brädspelsklubb</h1>
-        </div>
+    <div id="header">
+        <h1>Jag <span class="glyphicon glyphicon-heart text-danger"></span> Kalmar Brädspelsklubb</h1>
+    </div>
     <div class="container-fluid body-content bg-info">
         <div class="row">
             <div class="col-lg-2">
@@ -31,8 +31,6 @@
         </div>
     </div>
 
-
-
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -42,19 +40,19 @@
                 </div>
                 @using (Ajax.BeginForm("AddParticipants", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "delete-p", InsertionMode = InsertionMode.Replace, OnBegin = "$('#myModal').modal('hide')" }))
                 {
-                <div class="modal-body">
+                    <div class="modal-body">
 
-                    <div id="members"></div>
+                        <div id="members"></div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-                    <button type="submit" class="btn btn-primary">Lägg till</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+                        <button type="submit" class="btn btn-primary">Lägg till</button>
+                    </div>
                 }
             </div>
         </div>
     </div>
-    
+
 </body>
 </html>
